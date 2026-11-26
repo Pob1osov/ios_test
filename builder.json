@@ -1,0 +1,22 @@
+{
+  "project": "ios_test",
+  "platform": "ios",
+  "github": {
+    "owner": "POBR-PLACEHOLDER",
+    "repo": "ios_test"
+  },
+  "provider": "github",
+  "codemagic": {},
+  "bitrise": {},
+  "ios": {
+    "path": "ios",
+    "bundleId": "com.example.iosTest"
+  },
+  "flutter": {
+    "version": "3.50.1",
+    "watch": {}
+  },
+  "reactNative": {},
+  "kmp": {},
+  "mobai": {}
+}
