@@ -1,0 +1,69 @@
+on:
+  # Pushing a tag named ios-build/<build-id> starts the same job without the
+  # GitHub API, for environments where only git access is available. A push
+  # event runs the workflow file from the tagged commit, and the parameters
+  # come from builder.json there. The tag is deleted when the job ends.
+  push:
+    tags:
+      - 'ios-build/*'
+  workflow_dispatch:
+    inputs:
+      build_id:
+        description: 'Unique build identifier'
+        required: true
+        type: string
+      snapshot_ref:
+        description: 'Ref holding the working-tree snapshot to build (empty builds this branch)'
+        required: false
+        type: string
+        default: ''
+      ios_path:
+        description: 'Path to iOS project (e.g., "ios" for React Native)'
+        required: false
+        type: string
+        default: '.'
+      scheme:
+        description: 'Xcode scheme to build (auto-detected if empty)'
+        required: false
+        type: string
+        default: ''
+      use_signing:
+        description: 'Enable code signing (requires secrets to be configured)'
+        required: false
+        type: boolean
+        default: false
+      configuration:
+        description: 'Build configuration (Debug is faster, Release for production)'
+        required: false
+        type: string
+        default: 'Debug'
+      flutter_version:
+        description: 'Flutter version to use (e.g., 3.24.0). Empty means latest stable.'
+        required: false
+        type: string
+        default: ''
+      jdk_version:
+        description: 'JDK version for Kotlin Multiplatform Gradle builds (e.g., 17).'
+        required: false
+        type: string
+        default: '17'
+      # One input for the profile fields that are not inputs of their own, so
+      # the workflow stays under the ten-input limit of workflow_dispatch.
+      profile:
+        description: 'Selected builder.json profile as JSON: {"name": "...", "env": {...}, "distribution": "..."}'
+        required: false
+        type: string
+        default: '{}'
+      # The tenth and last input workflow_dispatch allows; combine before adding.
+      build_number:
+        description: 'CFBundleVersion to stamp on the build: N, or X.Y.Z+N to set the marketing version too. Empty leaves the project as is.'
+        required: false
+        type: string
+        default: ''
+
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - run: echo test
