@@ -1,5 +1,5 @@
 name: iOS Build
-run-name: iOS Build ${{ inputs.build_id || github.ref_name }}
+run-name: iOS Build ${{ github.event.inputs.build_id || github.ref_name || github.run_number }}
 
 on:
   # Pushing a tag named ios-build/<build-id> starts the same job without the
